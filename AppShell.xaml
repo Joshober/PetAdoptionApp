@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MAUI_Tutorial1_TodoList.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:MAUI_Tutorial1_TodoList.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="MAUI_Tutorial1_TodoList">
+
+    <TabBar>
+        <!-- Home Page Tab -->
+        <ShellContent 
+        Title="Home" 
+        Icon="home.png"
+        ContentTemplate="{DataTemplate views:HomePage}" 
+        Route="HomePage" />
+
+        <!-- All Pets Page Tab -->
+        <ShellContent 
+        Title="All Pets" 
+        Icon="pets.png"
+        ContentTemplate="{DataTemplate views:AllPetsPage}" 
+        Route="AllPetsPage" />
+        <ShellContent 
+      Title="Favorites" 
+      Icon="account.png"
+      ContentTemplate="{DataTemplate views:FavoritesPage}" 
+      Route="FavoritesPage" />
+
+        <!-- Events Page Tab -->
+        <ShellContent 
+        Title="Events" 
+        Icon="events.png"
+        ContentTemplate="{DataTemplate views:EventsPage}" 
+        Route="EventsPage" />
+
+        <!-- My Account Page Tab -->
+        <ShellContent 
+        Title="My Account" 
+        Icon="account.png"
+        ContentTemplate="{DataTemplate views:MyAccountPage}" 
+        Route="MyAccountPage" />
+        
+    </TabBar>
+
+
+</Shell>

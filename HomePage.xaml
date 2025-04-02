@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Name="thisPage"
+    x:Class="MAUI_Tutorial1_TodoList.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MAUI_Tutorial1_TodoList.ViewModel"
+    xmlns:models="clr-namespace:MAUI_Tutorial1_TodoList.Models"
+    x:DataType="vm:HomeViewModel"
+    Title="Home"
+    BackgroundColor="#F2F2F2">
+
+    <!-- Resource Dictionary for Centralized Styling -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Card Frame Style with Hover Animation -->
+            <Style x:Key="CardFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="0,10"/>
+                <Setter Property="Padding" Value="15"/>
+                <!-- Optional: Use VisualStateManager for hover effect on supported platforms -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1.02"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <!-- Section Header Style -->
+            <Style x:Key="SectionHeaderStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="TextColor" Value="#333333"/>
+                <Setter Property="Margin" Value="0,10,0,5"/>
+            </Style>
+            <!-- Animal Card Title -->
+            <Style x:Key="AnimalTitleStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="#333333"/>
+            </Style>
+            <!-- Animal Detail Label Style -->
+            <Style x:Key="AnimalDetailStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#666666"/>
+            </Style>
+            <!-- Floating Chat Button Style -->
+            <Style x:Key="FloatingButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#800080" />
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="30"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="Black" Offset="2,2" Opacity="0.4" Radius="4" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Margin" Value="20"/>
+                <Setter Property="FontSize" Value="24"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <!-- Main Scrollable Content -->
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="10">
+                <!-- Horizontal List 1: Recommended Animals -->
+                <Label Text="Recommended Animals" Style="{StaticResource SectionHeaderStyle}" />
+                <CollectionView ItemsSource="{Binding Reccomend}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Animal">
+                            <Frame Style="{StaticResource CardFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Image Source="{Binding PrimaryPhotoUrl}"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Aspect="AspectFill"/>
+                                    <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}"/>
+                                        <Label Text="{Binding OldBreed}" Style="{StaticResource AnimalDetailStyle}"/>
+                                        <Label Text="{Binding LocatedAt}" Style="{StaticResource AnimalDetailStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                          CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Horizontal List 2 -->
+                <Label Text="{Binding Collection1[0].LocatedAt}" Style="{StaticResource SectionHeaderStyle}" />
+                <CollectionView ItemsSource="{Binding Collection1}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Animal">
+                            <Frame Style="{StaticResource CardFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Image Source="{Binding PrimaryPhotoUrl}"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Aspect="AspectFill"/>
+                                    <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}"/>
+                                        <Label Text="{Binding OldBreed}" Style="{StaticResource AnimalDetailStyle}"/>
+                                        <Label Text="{Binding LocatedAt}" Style="{StaticResource AnimalDetailStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                          CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Horizontal List 3 -->
+                <Label Text="{Binding Collection2[0].LocatedAt}" Style="{StaticResource SectionHeaderStyle}" />
+                <CollectionView ItemsSource="{Binding Collection2}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Animal">
+                            <Frame Style="{StaticResource CardFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Image Source="{Binding PrimaryPhotoUrl}"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Aspect="AspectFill"/>
+                                    <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}"/>
+                                        <Label Text="{Binding OldBreed}" Style="{StaticResource AnimalDetailStyle}"/>
+                                        <Label Text="{Binding LocatedAt}" Style="{StaticResource AnimalDetailStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                          CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Horizontal List 4 -->
+                <Label Text="{Binding Collection3[0].LocatedAt}" Style="{StaticResource SectionHeaderStyle}" />
+                <CollectionView ItemsSource="{Binding Collection3}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Animal">
+                            <Frame Style="{StaticResource CardFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Image Source="{Binding PrimaryPhotoUrl, FallbackValue=default.png}"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Aspect="AspectFill"/>
+                                    <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}"/>
+                                        <Label Text="{Binding OldBreed}" Style="{StaticResource AnimalDetailStyle}"/>
+                                        <Label Text="{Binding LocatedAt}" Style="{StaticResource AnimalDetailStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                          CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Unofficial Pets Section -->
+                <Label Text="Unofficial Pets" Style="{StaticResource SectionHeaderStyle}" />
+                <CollectionView ItemsSource="{Binding Unoffical}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Animal">
+                            <Frame Style="{StaticResource CardFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Image Source="{Binding PrimaryPhotoUrl}"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Aspect="AspectFill"/>
+                                    <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}"/>
+                                        <Label Text="{Binding BreedsLabel}" Style="{StaticResource AnimalDetailStyle}"/>
+                                        <Label Text="{Binding Age}" Style="{StaticResource AnimalDetailStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                          CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Floating Chat Button -->
+        <Button Text="💬"
+                Command="{Binding OpenChatCommand}"
+                Style="{StaticResource FloatingButtonStyle}"
+                HorizontalOptions="End"
+                VerticalOptions="End"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MAUI_Tutorial1_TodoList.ViewModel"
+             xmlns:models="clr-namespace:MAUI_Tutorial1_TodoList.Models"
+             x:Class="MAUI_Tutorial1_TodoList.Views.EventsPage"
+             Title="Upcoming Pet Events">
+
+    <ContentPage.BindingContext>
+        <vm:EventsViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <RefreshView Command="{Binding LoadCommand}" IsRefreshing="{Binding IsLoading}">
+            <CollectionView ItemsSource="{Binding Events}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Label Text="No upcoming pet events found."
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           FontAttributes="Italic"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PetEvent">
+                        <Frame Margin="10" Padding="10" BorderColor="LightGray" CornerRadius="10">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEventTapped"/>
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions="100,*" ColumnSpacing="10">
+                                <Image Grid.Column="0"
+                                       Source="{Binding ImageUrl}"
+                                       HeightRequest="100"
+                                       WidthRequest="100"
+                                       Aspect="AspectFill"/>
+                                <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium"/>
+                                    <Label Text="{Binding When}" FontSize="Small" TextColor="Gray"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

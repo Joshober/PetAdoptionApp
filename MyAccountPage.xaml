@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MAUI_Tutorial1_TodoList.Controls"
+    xmlns:vm="clr-namespace:MAUI_Tutorial1_TodoList.ViewModel"
+    xmlns:local="clr-namespace:MAUI_Tutorial1_TodoList.Converters"
+    xmlns:behaviors="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    x:Class="MAUI_Tutorial1_TodoList.Views.MyAccountPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- If you already have InverseBoolConverter, keep it here. -->
+            <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+
+            <!-- JoinListConverter to transform a list into a string -->
+            <local:JoinListConverter x:Key="JoinListConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:MyAccountViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <!-- Reusable banner using the ProfileImage property -->
+
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="20">
+                <!-- LOGIN/REGISTER AREA: Visible only when NOT logged in -->
+                <StackLayout IsVisible="{Binding IsLoggedIn, Converter={StaticResource InverseBoolConverter}}">
+                    <!-- LOGIN FORM: Visible when IsLoginVisible is true -->
+                    <StackLayout x:Name="LoginForm" IsVisible="{Binding IsLoginVisible}">
+                        <Frame BorderColor="Gray" Padding="10">
+                            <StackLayout Spacing="10">
+                                <Label Text="Login" FontAttributes="Bold" FontSize="18" />
+                                <Entry Placeholder="Email" Text="{Binding LoginEmail}" Keyboard="Email" />
+                                <Entry Placeholder="Password" 
+                                       Text="{Binding LoginPassword}" 
+                                       IsPassword="True" 
+                                       ReturnType="Go">
+                                    <Entry.Behaviors>
+                                        <behaviors:EventToCommandBehavior 
+                                            EventName="Completed" 
+                                            Command="{Binding LoginCommand}" />
+                                    </Entry.Behaviors>
+                                </Entry>
+                                <Button Text="Login" Command="{Binding LoginCommand}" />
+                            </StackLayout>
+                        </Frame>
+                        <!-- Button to switch to Register form -->
+                        <Button Text="Don't have an account? Register" 
+                                Command="{Binding ToggleLoginRegisterCommand}" />
+                    </StackLayout>
+
+                    <!-- REGISTER FORM: Visible when IsLoginVisible is false -->
+                    <StackLayout x:Name="RegisterForm" IsVisible="{Binding IsLoginVisible, Converter={StaticResource InverseBoolConverter}}">
+                        <Frame BorderColor="Gray" Padding="10">
+                            <StackLayout Spacing="10">
+                                <Label Text="Register" FontAttributes="Bold" FontSize="18" />
+                                <Entry Placeholder="First Name" Text="{Binding RegisterFirstName}" />
+                                <Entry Placeholder="Last Name" Text="{Binding RegisterLastName}" />
+                                <Entry Placeholder="Email" Text="{Binding RegisterEmail}" Keyboard="Email" />
+                                <Entry Placeholder="Password" Text="{Binding RegisterPassword}" IsPassword="True" />
+                                <Button Text="Register" Command="{Binding RegisterCommand}" />
+                            </StackLayout>
+                        </Frame>
+                        <!-- Button to switch back to Login form -->
+                        <Button Text="Already have an account? Login" 
+                                Command="{Binding ToggleLoginRegisterCommand}" />
+                    </StackLayout>
+                </StackLayout>
+
+                <!-- USER INFO SECTION: Visible only when logged in -->
+                <StackLayout IsVisible="{Binding IsLoggedIn}">
+                    <Label Text="Current User Info" FontAttributes="Bold" FontSize="18" />
+
+                    <!-- Binding directly to CurrentUser properties -->
+                    <Label Text="First Name:" />
+                    <Label Text="{Binding CurrentUser.FirstName}" />
+
+                    <Label Text="Email:" />
+                    <Label Text="{Binding CurrentUser.Email}" />
+
+                    <Label Text="Filter Animal Type:" />
+                    <Label Text="{Binding CurrentUser.FilterAnimalType}" />
+
+                    <Label Text="Filter Gender:" />
+                    <Label Text="{Binding CurrentUser.FilterGender, Converter={StaticResource JoinListConverter}}" />
+
+                    <Label Text="Filter Breed:" />
+                    <Label Text="{Binding CurrentUser.FilterBreed, Converter={StaticResource JoinListConverter}}" />
+
+                    <!-- Add additional filter details as needed -->
+
+                    <Button Text="Logout" Command="{Binding LogoutCommand}" />
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

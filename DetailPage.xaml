@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="MAUI_Tutorial1_TodoList.Views.DetailPage"
+    Title="{Binding Pet.Name}"
+    BackgroundColor="#F2F2F2">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Card Frame Style -->
+            <Style x:Key="CardFrameStyle" TargetType="Frame">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="0,10"/>
+                <Setter Property="Padding" Value="15"/>
+            </Style>
+            <!-- Header Text Style -->
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="TextColor" Value="#333333"/>
+            </Style>
+            <!-- SubHeader Text Style -->
+            <Style x:Key="SubHeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="#666666"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            </Style>
+            <!-- Detail Title Style -->
+            <Style x:Key="DetailTitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#444444"/>
+            </Style>
+            <!-- Detail Value Style -->
+            <Style x:Key="DetailValueLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="#555555"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Main Scrollable Container -->
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="24">
+
+            <!-- Main Image Section with Favorite Icon Overlay -->
+            <Grid>
+                <!-- Main Image inside a Frame -->
+                <Frame Style="{StaticResource CardFrameStyle}" Padding="0">
+                    <Image x:Name="AnimalImage"
+                           Source="{Binding DisplayImageUrl}"
+                           Aspect="AspectFill"
+                           HeightRequest="240" />
+                </Frame>
+                <!-- (Optional: Add a favorite icon overlay inside the Grid if desired) -->
+            </Grid>
+
+            <!-- Header Section with Favorite Button and Pet Name/Details -->
+            <HorizontalStackLayout>
+                <ImageButton Grid.ZIndex="1"
+                             Command="{Binding ToggleFavoriteCommand}"
+                             HeightRequest="48"
+                             WidthRequest="48"
+                             BackgroundColor="Transparent"
+                             HorizontalOptions="End"
+                             VerticalOptions="Start"
+                             Margin="0,10,10,0">
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorited}" Value="True">
+                            <Setter Property="Source" Value="heart_filled.svg" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorited}" Value="False">
+                            <Setter Property="Source" Value="heart.svg" />
+                        </DataTrigger>
+                    </ImageButton.Triggers>
+                </ImageButton>
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="{Binding Pet.Name}" Style="{StaticResource HeaderLabelStyle}" />
+                    <Label Text="{Binding Pet.BreedsLabel}" Style="{StaticResource SubHeaderLabelStyle}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Description Section -->
+            <Frame Style="{StaticResource CardFrameStyle}"
+                   BackgroundColor="{DynamicResource SecondarySystemBackgroundColor}">
+                <toolkit:Expander>
+                    <toolkit:Expander.Header>
+                        <Label Text="Description"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                    </toolkit:Expander.Header>
+                    <Label Text="{Binding ParsedDescription}"
+                           LineBreakMode="WordWrap"
+                           FontSize="16"
+                           TextColor="#444444"
+                           Margin="0,10,0,0" />
+                </toolkit:Expander>
+            </Frame>
+
+            <!-- Additional Details Section -->
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <Grid ColumnSpacing="12" RowSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Define as many rows as needed -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Adoption Fee -->
+                    <Label Text="Fee:" Style="{StaticResource DetailTitleLabelStyle}" Grid.Row="2" Grid.Column="0" />
+                    <Label Text="{Binding AdoptionFee}" Style="{StaticResource DetailValueLabelStyle}" Grid.Row="2" Grid.Column="1" />
+
+                    <!-- Includes -->
+                    <Label Text="Includes:" Style="{StaticResource DetailTitleLabelStyle}" Grid.Row="3" Grid.Column="0" />
+                    <Label Text="{Binding Includes}" Style="{StaticResource DetailValueLabelStyle}" Grid.Row="3" Grid.Column="1" />
+
+                    <!-- Age -->
+                    <Label Text="Age:" Style="{StaticResource DetailTitleLabelStyle}" Grid.Row="4" Grid.Column="0" />
+                    <Label Text="{Binding Pet.FilterAge}" Style="{StaticResource DetailValueLabelStyle}" Grid.Row="4" Grid.Column="1" />
+
+                    <!-- Weight -->
+                    <Label Text="Weight:" Style="{StaticResource DetailTitleLabelStyle}" Grid.Row="5" Grid.Column="0" />
+                    <Label Text="{Binding Weight}" Style="{StaticResource DetailValueLabelStyle}" Grid.Row="5" Grid.Column="1" />
+
+                    <!-- Shelter Name -->
+                    <Label Text="Shelter:" Style="{StaticResource DetailTitleLabelStyle}" Grid.Row="7" Grid.Column="0" />
+                    <Label Text="{Binding Pet.ShelterName}" Style="{StaticResource DetailValueLabelStyle}" Grid.Row="7" Grid.Column="1" />
+
+                    <!-- Phone Number -->
+                    <!-- Phone Number -->
+                    <Label Text="Phone Number:" 
+       Style="{StaticResource DetailTitleLabelStyle}" 
+       Grid.Row="8" Grid.Column="0" />
+                    <Label Text="{Binding Pet.PhoneNumber}" 
+       Style="{StaticResource DetailValueLabelStyle}" 
+       Grid.Row="8" Grid.Column="1"
+       TextColor="Blue"
+       TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenPhoneCommand}"
+                              CommandParameter="{Binding Pet.PhoneNumber}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+
+                    <!-- Shelter Address -->
+                    <Label Text="Shelter Address:" 
+       Style="{StaticResource DetailTitleLabelStyle}" 
+       Grid.Row="9" Grid.Column="0" />
+
+                    <Label Text="{Binding Pet.ShelterAddress}" 
+       Style="{StaticResource DetailValueLabelStyle}" 
+       Grid.Row="9" Grid.Column="1"
+       TextColor="Blue"
+       TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenMapsCommand}"
+                              CommandParameter="{Binding Pet.ShelterAddress}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+
+            <!-- AI Details Section -->
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Button Text="View Image Analysis"
+                            Command="{Binding ToggleAiCommand}"
+                            FontSize="16"
+                            BackgroundColor="Purple"
+                            TextColor="White"
+                            CornerRadius="8"/>
+                    <toolkit:Expander IsExpanded="True">
+                        <toolkit:Expander.Header>
+                            <Label Text="{Binding AiAgeGroup}"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Purple" />
+                        </toolkit:Expander.Header>
+                        <toolkit:Expander.Content>
+                            <VerticalStackLayout Padding="10" Spacing="10">
+                                <CollectionView ItemsSource="{Binding AiBreeds}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="8" Margin="4" CornerRadius="8" BackgroundColor="#EFEFEF">
+                                                <VerticalStackLayout Spacing="4">
+                                                    <!-- Breed Label -->
+                                                    <Label Text="{Binding Label}" 
+                                                           FontAttributes="Bold" 
+                                                           TextColor="#333333"
+                                                           HorizontalOptions="Center"/>
+                                                    <!-- Progress Indicator: Bar under text -->
+                                                    <Grid HeightRequest="30" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+                                                        <!-- ProgressBar: binds to Percent (a value between 0 and 1) -->
+                                                        <ProgressBar Progress="{Binding Percent}" 
+                                                                     HeightRequest="20" 
+                                                                     ProgressColor="Purple"
+                                                                     BackgroundColor="Transparent"
+                                                                     HorizontalOptions="FillAndExpand"/>
+                                                        <!-- Overlay Label: formats Percent as a percentage (e.g., 75.00%) -->
+
+
+                                                        <Label Text="{Binding Percent, StringFormat='{0:N2}%'}" 
+       HorizontalOptions="Center" 
+       VerticalOptions="Center" 
+       TextColor="Grey"
+       BackgroundColor="#F2F2F2"                                                        
+       FontAttributes="Bold"
+       FontSize="18"/>
+
+                                                    </Grid>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </toolkit:Expander.Content>
+                    </toolkit:Expander>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

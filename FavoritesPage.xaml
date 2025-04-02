@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Name="thisPage"
+    x:Class="MAUI_Tutorial1_TodoList.Views.FavoritesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MAUI_Tutorial1_TodoList.ViewModel"
+    xmlns:models="clr-namespace:MAUI_Tutorial1_TodoList.Models"
+    x:DataType="vm:FavoritesViewModel"
+    Title="Favorites"
+    BackgroundColor="#F2F2F2"
+    NavigationPage.BarBackgroundColor="#800080"
+    NavigationPage.BarTextColor="White">
+
+
+
+    <!-- Resource Dictionary for Centralized Styling -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Card Frame Style -->
+            <Style x:Key="CardFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+            <!-- Animal Title Style -->
+            <Style x:Key="AnimalTitleStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#333333" />
+            </Style>
+            <!-- Animal Detail Style -->
+            <Style x:Key="AnimalDetailStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="#666666" />
+            </Style>
+            <!-- Floating Chat Button Style -->
+            <Style x:Key="FloatingButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#800080" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="WidthRequest" Value="60" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="Margin" Value="20" />
+                <Setter Property="FontSize" Value="24" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Main Layout -->
+    <Grid>
+        <!-- Pull-to-Refresh Container -->
+        <RefreshView Command="{Binding LoadCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding Pets}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Animal">
+                        <Frame Style="{StaticResource CardFrameStyle}">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Image Source="{Binding PrimaryPhotoUrl, FallbackValue=default.png}"
+                                       HeightRequest="100"
+                                       WidthRequest="100"
+                                       Aspect="AspectFill" />
+                                <StackLayout Grid.Column="1" Padding="10,0" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" Style="{StaticResource AnimalTitleStyle}" />
+                                    <Label Text="{Binding City}" Style="{StaticResource AnimalDetailStyle}" />
+                                    <Label Text="{Binding ShelterName}" Style="{StaticResource AnimalDetailStyle}" />
+                                </StackLayout>
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPetCommand}"
+                                                      CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Floating Chat Button -->
+        <Button Text="💬 Chat with PetBot"
+                Command="{Binding OpenChatCommand}"
+                Style="{StaticResource FloatingButtonStyle}"
+                HorizontalOptions="End"
+                VerticalOptions="End"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView x:Name="This"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI_Tutorial1_TodoList.Controls.BannerView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!-- Banner Header with Profile and Postal Code -->
+        <Grid Grid.Row="0" BackgroundColor="LightBlue" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="My App Banner" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Start" />
+                <!-- New Label to display PostalCode -->
+                <Label Text="{Binding PostalCode, Source={x:Reference This}}"
+                       FontSize="Small"
+                       TextColor="DarkBlue"
+                       HorizontalOptions="Start" />
+            </StackLayout>
+            <Image x:Name="ProfileImageButton"
+                   Grid.Column="1"
+                   Source="{Binding Source={x:Reference This}, Path=ProfileImageSource}"
+                   HeightRequest="40"
+                   WidthRequest="40"
+                   Aspect="AspectFill"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnProfileImageTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+        <StackLayout x:Name="DropdownMenu"
+                     Grid.Row="1"
+                     BackgroundColor="White"
+                     IsVisible="False"
+                     Padding="10">
+            <Button Text="Login" />
+            <Button Text="My Account" />
+            <Button Text="Settings" />
+        </StackLayout>
+    </Grid>
+</ContentView>

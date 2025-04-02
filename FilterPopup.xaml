@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="MAUI_Tutorial1_TodoList.Views.FilterPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <Frame BackgroundColor="White"
+           Padding="20"
+           CornerRadius="8"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           WidthRequest="300"
+           HeightRequest="600">
+        <ScrollView>
+            <StackLayout Spacing="15">
+                <!-- Header Label -->
+                <Label Text="Filter Options" FontSize="Large" HorizontalOptions="Center" />
+
+                <!-- Animal Type Filter -->
+                <Label Text="Animal Type" />
+                <Picker x:Name="AnimalTypePicker" Title="Select Animal Type">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Dog</x:String>
+                            <x:String>Cat</x:String>
+                            <x:String>Other</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Breed Filter -->
+                <Label Text="Breed" />
+                <Picker x:Name="BreedPicker" Title="Select Breed">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Beagle</x:String>
+                            <x:String>Labrador</x:String>
+                            <x:String>Poodle</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Age Filter -->
+                <Label Text="Age" />
+                <Picker x:Name="AgePicker" Title="Select Age">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Adult</x:String>
+                            <x:String>Baby</x:String>
+                            <x:String>Senior</x:String>
+                            <x:String>Young</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Size Filter -->
+                <Label Text="Size" />
+                <Picker x:Name="SizePicker" Title="Select Size">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Small</x:String>
+                            <x:String>Medium</x:String>
+                            <x:String>Large</x:String>
+                            <x:String>Extra Large</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Gender Filter -->
+                <Label Text="Gender" />
+                <Picker x:Name="GenderPicker" Title="Select Gender">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Good With Filter -->
+                <Label Text="Good With" />
+                <Picker x:Name="HouseholdPicker" Title="Select Household">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Good with Dogs</x:String>
+                            <x:String>Good with Cats</x:String>
+                            <x:String>Good with Other Animals</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Coat Length Filter -->
+                <Label Text="Coat Length" />
+                <Picker x:Name="CoatLengthPicker" Title="Select Coat Length">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Short</x:String>
+                            <x:String>Medium</x:String>
+                            <x:String>Long</x:String>
+                            <x:String>Curly</x:String>
+                            <x:String>Hairless</x:String>
+                            <x:String>Wire</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Color Filter -->
+                <Label Text="Color" />
+                <Picker x:Name="ColorPicker" Title="Select Color">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Black</x:String>
+                            <x:String>White / Cream</x:String>
+                            <x:String>Brown / Chocolate</x:String>
+                            <x:String>Brindle</x:String>
+                            <x:String>Gray / Blue / Silver</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Days on Petfinder Filter -->
+                <Label Text="Days on Petfinder" />
+                <Picker x:Name="DaysPicker" Title="Select Days">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>7</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Shelter/Rescue Filter -->
+                <Label Text="Shelter/Rescue" />
+                <Picker x:Name="ShelterPicker" Title="Select Shelter">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String></x:String>
+                            <x:String>Shelter A</x:String>
+                            <x:String>Shelter B</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Apply and Clear Buttons -->
+                <Button Text="Apply Filters"
+                        Clicked="OnApplyFiltersClicked"
+                        HorizontalOptions="Center" />
+                <Button Text="Clear Filters"
+                        Clicked="OnClearFiltersClicked"
+                        HorizontalOptions="Center" />
+            </StackLayout>
+        </ScrollView>
+    </Frame>
+</mct:Popup>

@@ -1,0 +1,56 @@
+<mct:Popup 
+    x:Class="MAUI_Tutorial1_TodoList.Views.ChatPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Size="350,450">
+
+    <Frame 
+        CornerRadius="12"
+        BackgroundColor="White"
+        HasShadow="True"
+        Padding="16">
+        <VerticalStackLayout Spacing="12">
+            <!-- Header with label and close button -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Chat with PetBot:" FontSize="18" 
+                       VerticalOptions="Center" Grid.Column="0"/>
+                <Button Text="X"
+                        FontSize="18"
+                        BackgroundColor="Transparent"
+                        TextColor="Gray"
+                        Clicked="Close_Clicked"
+                        VerticalOptions="Center"
+                        Grid.Column="1"
+                        Margin="0,0,0,0"/>
+            </Grid>
+
+            <!-- Chat conversation history -->
+            <CollectionView x:Name="ChatCollection" HeightRequest="250">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="8" CornerRadius="8" Margin="4">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsUser}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="LightBlue" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsUser}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="LightGray" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Label Text="{Binding Text}" TextColor="Black" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- User input and actions -->
+            <Editor x:Name="UserInput" Placeholder="Type your question..." AutoSize="TextChanges" />
+            <Button Text="Send" Clicked="OnSendClicked" />
+        </VerticalStackLayout>
+    </Frame>
+</mct:Popup>
